@@ -55,9 +55,11 @@
 
 
 (def ^:private pretty-printer
-  (doto (DefaultPrettyPrinter.)
-    (.indentArraysWith DefaultIndenter/SYSTEM_LINEFEED_INSTANCE)
-    (.indentObjectsWith DefaultIndenter/SYSTEM_LINEFEED_INSTANCE)))
+  (let [nl DefaultIndenter/SYSTEM_LINEFEED_INSTANCE
+        pp (.withoutSpacesInObjectEntries (DefaultPrettyPrinter.))]
+    (doto pp
+      (.indentArraysWith nl)
+      (.indentObjectsWith nl))))
 
 
 (defn display
