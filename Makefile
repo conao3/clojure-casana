@@ -21,7 +21,7 @@ build:
 
 .PHONY: test
 test:
-	clojure -X:test cognitect.test-runner.api/test
+	clojure -M:test
 
 .PHONY: clean
 clean:
