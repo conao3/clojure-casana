@@ -73,6 +73,57 @@
         (t/is (= "/tasks/1" @captured))))))
 
 
+(t/deftest update-cmd-test
+  (t/testing "updates name and notes"
+    (let [captured (atom nil)]
+      (with-redefs [config/load-config (fn [_] test-cfg)
+                    api/put! (fn [_ path body]
+                               (reset! captured {:path path :body body})
+                               {:gid "1" :name "New"})]
+        (with-out-str (tasks/update-cmd {:opts {:profile :default :output :text
+                                                :gid "1" :name "New" :notes "body"}}))
+        (t/is (= "/tasks/1" (:path @captured)))
+        (t/is (= "New" (get-in @captured [:body :name])))
+        (t/is (= "body" (get-in @captured [:body :notes]))))))
+  (t/testing "replaces dependencies when --dependencies given"
+    (let [put-captured  (atom nil)
+          post-calls    (atom [])]
+      (with-redefs [config/load-config (fn [_] test-cfg)
+                    api/get!  (fn [_ _] [{:gid "old1"}])
+                    api/put!  (fn [_ path body]
+                                (reset! put-captured {:path path :body body})
+                                {:gid "1"})
+                    api/post! (fn [_ path body]
+                                (swap! post-calls conj {:path path :body body})
+                                {})]
+        (with-out-str (tasks/update-cmd {:opts {:profile :default :output :text
+                                                :gid "1" :dependencies "new1,new2"}}))
+        (t/is (= "/tasks/1" (:path @put-captured)))
+        (t/is (= 2 (count @post-calls)))
+        (t/is (str/includes? (-> @post-calls first :path) "removeDependencies"))
+        (t/is (str/includes? (-> @post-calls second :path) "addDependencies"))
+        (t/is (= ["new1" "new2"] (-> @post-calls second :body :dependencies))))))
+  (t/testing "clears dependencies when --dependencies is empty string"
+    (let [post-calls (atom [])]
+      (with-redefs [config/load-config (fn [_] test-cfg)
+                    api/get!  (fn [_ _] [{:gid "old1"}])
+                    api/put!  (fn [_ _ _] {:gid "1"})
+                    api/post! (fn [_ path body]
+                                (swap! post-calls conj {:path path :body body})
+                                {})]
+        (with-out-str (tasks/update-cmd {:opts {:profile :default :output :text
+                                                :gid "1" :dependencies ""}}))
+        (t/is (= 1 (count @post-calls)))
+        (t/is (str/includes? (-> @post-calls first :path) "removeDependencies")))))
+  (t/testing "does not touch dependencies when --dependencies not given"
+    (let [get-called (atom false)]
+      (with-redefs [config/load-config (fn [_] test-cfg)
+                    api/get!  (fn [_ _] (reset! get-called true) [])
+                    api/put!  (fn [_ _ _] {:gid "1"})]
+        (with-out-str (tasks/update-cmd {:opts {:profile :default :output :text :gid "1"}}))
+        (t/is (false? @get-called))))))
+
+
 (t/deftest create-cmd-test
   (t/testing "sends name in body"
     (let [captured (atom nil)]
