@@ -20,10 +20,10 @@
 (defn create-cmd
   [{:keys [opts]}]
   (let [cfg (config/load-config (:profile opts :default))
-        params (cond-> {:parent (:task opts)
-                        :resource_subtype "external"
-                        :url (:url opts)}
-                 (:name opts) (assoc :name (:name opts)))]
+        params {:parent (:task opts)
+                :resource_subtype "external"
+                :name (or (:name opts) (:url opts))
+                :url (:url opts)}]
     (output/display-one (:output opts :table) columns
                         (api/post-form! cfg "/attachments" params))))
 
