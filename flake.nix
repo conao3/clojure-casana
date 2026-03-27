@@ -20,7 +20,7 @@
         ...
       }: let
         overlay = final: prev: let
-          jdk = prev.jdk25;
+          jdk = prev.graalvmPackages.graalvm-ce;
           clojure = prev.clojure.override {inherit jdk;};
         in {
           inherit jdk clojure;
