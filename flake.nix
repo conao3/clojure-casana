@@ -22,8 +22,9 @@
         overlay = final: prev: let
           jdk = prev.jdk25;
           clojure = prev.clojure.override {inherit jdk;};
+          cljstyle = prev.cljstyle.override {inherit jdk;};
         in {
-          inherit jdk clojure;
+          inherit jdk clojure cljstyle;
         };
         pkgs = import inputs.nixpkgs {
           inherit system;
@@ -33,12 +34,15 @@
         treefmt = {
           projectRootFile = "flake.nix";
           programs.alejandra.enable = true;
+          programs.cljstyle.enable = true;
         };
 
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
             jdk
             clojure
+            cljstyle
+            clj-kondo
           ];
         };
       };

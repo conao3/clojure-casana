@@ -1,11 +1,14 @@
 (ns conao3.casana.cmd.tasks-test
-  (:require [clojure.string :as str]
-            [clojure.test :refer [deftest is testing]]
-            [conao3.casana.api :as api]
-            [conao3.casana.cmd.tasks :as tasks]
-            [conao3.casana.config :as config]))
+  (:require
+    [clojure.string :as str]
+    [clojure.test :refer [deftest is testing]]
+    [conao3.casana.api :as api]
+    [conao3.casana.cmd.tasks :as tasks]
+    [conao3.casana.config :as config]))
+
 
 (def ^:private test-cfg {:access-token "tok"})
+
 
 (deftest list-cmd-test
   (testing "calls /tasks without filters when no options given"
@@ -27,6 +30,7 @@
         (with-out-str (tasks/list-cmd {:opts {:profile :default :output :text :section "456"}}))
         (is (str/includes? @captured "section=456"))))))
 
+
 (deftest complete-cmd-test
   (testing "sends completed=true to the task endpoint"
     (let [captured (atom nil)]
@@ -37,6 +41,7 @@
         (with-out-str (tasks/complete-cmd {:opts {:profile :default :output :text :gid "1"}}))
         (is (= "/tasks/1" (:path @captured)))
         (is (true? (:completed (:body @captured))))))))
+
 
 (deftest move-cmd-test
   (testing "calls addTask on the section endpoint"
@@ -49,6 +54,7 @@
         (is (= "/sections/456/addTask" (:path @captured)))
         (is (= {:task "987"} (:body @captured)))))))
 
+
 (deftest delete-cmd-test
   (testing "calls DELETE on the task endpoint"
     (let [captured (atom nil)]
@@ -58,6 +64,7 @@
                                   {})]
         (with-out-str (tasks/delete-cmd {:opts {:profile :default :gid "1"}}))
         (is (= "/tasks/1" @captured))))))
+
 
 (deftest create-cmd-test
   (testing "sends name in body"

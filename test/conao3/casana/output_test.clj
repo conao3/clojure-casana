@@ -1,9 +1,12 @@
 (ns conao3.casana.output-test
-  (:require [clojure.string :as str]
-            [clojure.test :refer [deftest is testing]]
-            [conao3.casana.output :as output]))
+  (:require
+    [clojure.string :as str]
+    [clojure.test :refer [deftest is testing]]
+    [conao3.casana.output :as output]))
+
 
 (def ^:private cell-str #'output/cell-str)
+
 
 (deftest cell-str-test
   (testing "nil returns dash"
@@ -18,6 +21,7 @@
     (is (= "Alice" (cell-str {:gid "123" :name "Alice"}))))
   (testing "map without :name"
     (is (str/includes? (cell-str {:gid "123"}) "123"))))
+
 
 (deftest display-table-test
   (testing "header row is uppercased"
@@ -44,6 +48,7 @@
                                 {:gid "1" :name "Task A"}))]
       (is (str/includes? out "Task A")))))
 
+
 (deftest display-text-test
   (testing "values are tab-separated"
     (let [out (with-out-str
@@ -57,6 +62,7 @@
                                        {:gid "2" :name "B"}]))
                     str/split-lines)]
       (is (= 2 (count lines))))))
+
 
 (deftest display-json-test
   (testing "output is valid JSON containing the data"

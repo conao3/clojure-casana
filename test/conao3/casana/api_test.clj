@@ -1,10 +1,13 @@
 (ns conao3.casana.api-test
-  (:require [clj-http.client :as http]
-            [clojure.string :as str]
-            [clojure.test :refer [deftest is testing]]
-            [conao3.casana.api :as api]))
+  (:require
+    [clj-http.client :as http]
+    [clojure.string :as str]
+    [clojure.test :refer [deftest is testing]]
+    [conao3.casana.api :as api]))
+
 
 (def ^:private test-config {:access-token "test-token"})
+
 
 (deftest get!-test
   (testing "calls GET with correct URL and auth header"
@@ -16,6 +19,7 @@
         (is (= "https://app.asana.com/api/1.0/workspaces" (:url @captured)))
         (is (= "Bearer test-token"
                (get-in @captured [:opts :headers "Authorization"])))))))
+
 
 (deftest post!-test
   (testing "calls POST with correct URL and JSON body"
@@ -36,6 +40,7 @@
         (api/post! test-config "/tasks" {:name "task"})
         (is (str/includes? (:body @captured) "\"data\""))))))
 
+
 (deftest put!-test
   (testing "calls PUT with correct URL"
     (let [captured (atom nil)]
@@ -44,6 +49,7 @@
                                {:body {:data {:gid "1" :completed true}}})]
         (api/put! test-config "/tasks/1" {:completed true})
         (is (= "https://app.asana.com/api/1.0/tasks/1" (:url @captured)))))))
+
 
 (deftest delete!-test
   (testing "calls DELETE with correct URL"

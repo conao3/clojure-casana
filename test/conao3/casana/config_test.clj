@@ -1,11 +1,18 @@
 (ns conao3.casana.config-test
-  (:require [clojure.test :refer [deftest is testing]]
-            [conao3.casana.config :as config])
-  (:import [java.nio.file Files]
-           [java.nio.file.attribute FileAttribute]))
+  (:require
+    [clojure.test :refer [deftest is testing]]
+    [conao3.casana.config :as config])
+  (:import
+    (java.nio.file
+      Files)
+    (java.nio.file.attribute
+      FileAttribute)))
 
-(defn- create-tmp-dir []
+
+(defn- create-tmp-dir
+  []
   (str (Files/createTempDirectory "casana-test" (make-array FileAttribute 0))))
+
 
 (deftest save-and-load-config-test
   (testing "save and load roundtrip"
@@ -25,6 +32,7 @@
           (config/save-config :personal {:access-token "personal-tok"})
           (is (= "work-tok" (:access-token (config/load-config :work))))
           (is (= "personal-tok" (:access-token (config/load-config :personal)))))))))
+
 
 (deftest load-missing-config-test
   (testing "returns nil when config file does not exist"

@@ -1,7 +1,10 @@
 (ns conao3.casana.cmd.configure
-  (:require [conao3.casana.config :as config]))
+  (:require
+    [conao3.casana.config :as config]))
 
-(defn run [{:keys [opts]}]
+
+(defn run
+  [{:keys [opts]}]
   (let [profile (:profile opts :default)
         console (System/console)
         token (if console

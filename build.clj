@@ -1,14 +1,20 @@
 (ns build
-  (:require [clojure.tools.build.api :as b]))
+  (:require
+    [clojure.tools.build.api :as b]))
+
 
 (def ^:private class-dir "target/classes")
 (def ^:private uber-file "target/casana.jar")
 (def ^:private basis (b/create-basis {:project "deps.edn"}))
 
-(defn clean [_]
+
+(defn clean
+  [_]
   (b/delete {:path "target"}))
 
-(defn uber [_]
+
+(defn uber
+  [_]
   (clean nil)
   (b/copy-dir {:src-dirs ["src"]
                :target-dir class-dir})
