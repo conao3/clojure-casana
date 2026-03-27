@@ -22,9 +22,8 @@
         overlay = final: prev: let
           jdk = prev.jdk25;
           clojure = prev.clojure.override {inherit jdk;};
-          cljstyle = prev.cljstyle.override {inherit jdk;};
         in {
-          inherit jdk clojure cljstyle;
+          inherit jdk clojure;
         };
         pkgs = import inputs.nixpkgs {
           inherit system;
