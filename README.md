@@ -34,20 +34,20 @@ casana workspaces list
 
 # Projects
 casana projects list [--workspace <gid>]
-casana projects get <gid>
+casana projects get --gid <gid>
 
 # Sections
 casana sections list --project <gid>
-casana sections get <gid>
+casana sections get --gid <gid>
 
 # Tasks
 casana tasks list [--project <gid>] [--section <gid>] [--assignee <gid>]
-casana tasks get <gid>
+casana tasks get --gid <gid>
 casana tasks create --name <name> [--project <gid>] [--section <gid>] [--due <date>]
-casana tasks update <gid> [--name <name>] [--due <date>]
-casana tasks complete <gid>
-casana tasks move <gid> --section <gid>
-casana tasks delete <gid>
+casana tasks update --gid <gid> [--name <name>] [--due <date>]
+casana tasks complete --gid <gid>
+casana tasks move --gid <gid> --section <gid>
+casana tasks delete --gid <gid>
 
 # Comments
 casana comments list --task <gid>

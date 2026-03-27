@@ -24,16 +24,16 @@
   (println "  configure")
   (println "  workspaces list")
   (println "  projects list [--workspace <gid>]")
-  (println "  projects get <gid>")
+  (println "  projects get --gid <gid>")
   (println "  sections list --project <gid>")
-  (println "  sections get <gid>")
+  (println "  sections get --gid <gid>")
   (println "  tasks list [--project <gid>] [--section <gid>] [--assignee <gid>]")
-  (println "  tasks get <gid>")
+  (println "  tasks get --gid <gid>")
   (println "  tasks create --name <name> [--project <gid>] [--section <gid>] [--due <date>]")
-  (println "  tasks update <gid> [--name <name>] [--due <date>]")
-  (println "  tasks complete <gid>")
-  (println "  tasks move <gid> --section <gid>")
-  (println "  tasks delete <gid>")
+  (println "  tasks update --gid <gid> [--name <name>] [--due <date>]")
+  (println "  tasks complete --gid <gid>")
+  (println "  tasks move --gid <gid> --section <gid>")
+  (println "  tasks delete --gid <gid>")
   (println "  comments list --task <gid>")
   (println "  comments create --task <gid> --text <text>")
   (println)
@@ -47,16 +47,16 @@
   [{:cmds ["configure"]          :fn configure/run}
    {:cmds ["workspaces" "list"]  :fn workspaces/list-cmd}
    {:cmds ["projects" "list"]    :fn projects/list-cmd}
-   {:cmds ["projects" "get"]     :fn projects/get-cmd    :args->opts [:gid]}
+   {:cmds ["projects" "get"]     :fn projects/get-cmd}
    {:cmds ["sections" "list"]    :fn sections/list-cmd}
-   {:cmds ["sections" "get"]     :fn sections/get-cmd    :args->opts [:gid]}
+   {:cmds ["sections" "get"]     :fn sections/get-cmd}
    {:cmds ["tasks" "list"]       :fn tasks/list-cmd}
-   {:cmds ["tasks" "get"]        :fn tasks/get-cmd       :args->opts [:gid]}
+   {:cmds ["tasks" "get"]        :fn tasks/get-cmd}
    {:cmds ["tasks" "create"]     :fn tasks/create-cmd}
-   {:cmds ["tasks" "update"]     :fn tasks/update-cmd    :args->opts [:gid]}
-   {:cmds ["tasks" "complete"]   :fn tasks/complete-cmd  :args->opts [:gid]}
-   {:cmds ["tasks" "move"]       :fn tasks/move-cmd      :args->opts [:gid]}
-   {:cmds ["tasks" "delete"]     :fn tasks/delete-cmd    :args->opts [:gid]}
+   {:cmds ["tasks" "update"]     :fn tasks/update-cmd}
+   {:cmds ["tasks" "complete"]   :fn tasks/complete-cmd}
+   {:cmds ["tasks" "move"]       :fn tasks/move-cmd}
+   {:cmds ["tasks" "delete"]     :fn tasks/delete-cmd}
    {:cmds ["comments" "list"]    :fn comments/list-cmd}
    {:cmds ["comments" "create"]  :fn comments/create-cmd}
    {:cmds []                     :fn print-help}])
