@@ -1,14 +1,14 @@
 # clojure-casana
 
-Clojure 製の Asana CLI ツール。AWS CLI スタイルの `casana <resource> <action> [options]` インターフェースで Asana を操作できます。
+A Clojure CLI tool for Asana. Provides an AWS CLI-style interface: `casana <resource> <action> [options]`.
 
-## セットアップ
+## Setup
 
 ```bash
-nix develop   # 開発環境に入る（JDK・Clojure・cljstyle・clj-kondo が使えるようになる）
+nix develop   # enter dev environment (JDK, Clojure, cljstyle, clj-kondo)
 ```
 
-初回設定:
+Initial configuration:
 
 ```bash
 make ARGS="configure" run
@@ -16,23 +16,31 @@ make ARGS="configure" run
 # Default Workspace GID (optional): 123456789
 ```
 
-Personal Access Token は Asana → プロフィール → My Settings → Apps → Manage Developer Apps から発行してください。
+Generate a Personal Access Token at Asana → Profile → My Settings → Apps → Manage Developer Apps.
 
-## 使い方
+To find your Workspace GID, open any project in Asana and check the URL:
+
+```
+https://app.asana.com/0/{workspace_gid}/{project_gid}
+```
+
+Or run `casana workspaces list` after setting your access token.
+
+## Usage
 
 ```bash
-# ワークスペース
+# Workspaces
 casana workspaces list
 
-# プロジェクト
+# Projects
 casana projects list [--workspace <gid>]
 casana projects get <gid>
 
-# セクション
+# Sections
 casana sections list --project <gid>
 casana sections get <gid>
 
-# タスク
+# Tasks
 casana tasks list [--project <gid>] [--section <gid>] [--assignee <gid>]
 casana tasks get <gid>
 casana tasks create --name <name> [--project <gid>] [--section <gid>] [--due <date>]
@@ -41,41 +49,41 @@ casana tasks complete <gid>
 casana tasks move <gid> --section <gid>
 casana tasks delete <gid>
 
-# コメント
+# Comments
 casana comments list --task <gid>
 casana comments create --task <gid> --text <text>
 ```
 
-### グローバルオプション
+### Global options
 
-| オプション | デフォルト | 説明 |
+| Option | Default | Description |
 |---|---|---|
-| `--output json\|table\|text` | `table` | 出力形式 |
-| `--profile <name>` | `default` | 設定プロファイル |
-| `--workspace <gid>` | - | ワークスペース GID（設定ファイルを上書き） |
+| `--output json\|table\|text` | `table` | Output format |
+| `--profile <name>` | `default` | Configuration profile |
+| `--workspace <gid>` | - | Workspace GID (overrides config file) |
 
-## 開発
+## Development
 
 ```bash
-make run ARGS="tasks list --project 123456"   # 実行
-make test                                      # テスト（kaocha）
+make run ARGS="tasks list --project 123456"   # run
+make test                                      # run tests (kaocha)
 make check                                     # fmt + lint
-make fmt                                       # cljstyle でフォーマット
-make lint                                      # clj-kondo でリント
-make build                                     # uberjar ビルド（target/casana.jar）
-make clean                                     # ビルド成果物を削除
+make fmt                                       # format with cljstyle
+make lint                                      # lint with clj-kondo
+make build                                     # build uberjar (target/casana.jar)
+make clean                                     # remove build artifacts
 ```
 
-## 設定ファイル
+## Configuration
 
-`~/.config/casana/<profile>.edn` に保存されます。
+Stored at `~/.config/casana/<profile>.edn` (default: `~/.config/casana/default.edn`):
 
 ```edn
 {:access-token "your-token"
  :workspace "123456789"}
 ```
 
-複数プロファイルの切り替え:
+Multiple profiles:
 
 ```bash
 casana --profile work tasks list
