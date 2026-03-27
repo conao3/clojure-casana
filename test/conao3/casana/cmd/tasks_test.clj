@@ -28,7 +28,14 @@
       (with-redefs [config/load-config (fn [_] test-cfg)
                     api/get! (fn [_ path] (reset! captured path) [])]
         (with-out-str (tasks/list-cmd {:opts {:profile :default :output :text :section "456"}}))
-        (t/is (str/includes? @captured "section=456"))))))
+        (t/is (str/includes? @captured "section=456")))))
+  (t/testing "exits with error when both --project and --section are given"
+    (let [exit-called (atom false)]
+      (with-redefs-fn {#'tasks/exit! (fn [_] (reset! exit-called true))}
+        (fn []
+          (with-out-str (tasks/list-cmd {:opts {:profile :default :output :text
+                                                :project "123" :section "456"}}))
+          (t/is (true? @exit-called)))))))
 
 
 (t/deftest complete-cmd-test

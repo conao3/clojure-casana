@@ -5,6 +5,12 @@
    [conao3.casana.config :as config]
    [conao3.casana.output :as output]))
 
+(set! *warn-on-reflection* true)
+
+(defn- exit!
+  [code]
+  (System/exit code))
+
 
 (def ^:private columns [:gid :name :due_on :assignee :completed])
 
@@ -18,13 +24,18 @@
 
 (defn list-cmd
   [{:keys [opts]}]
-  (let [cfg (config/load-config (:profile opts :default))
-        params (cond-> {}
-                 (:project opts) (assoc :project (:project opts))
-                 (:section opts) (assoc :section (:section opts))
-                 (:assignee opts) (assoc :assignee (:assignee opts)))]
-    (output/display (:output opts :table) columns
-                    (api/get! cfg (str "/tasks?" (build-query params))))))
+  (if (and (:project opts) (:section opts))
+    (do
+      (binding [*out* *err*]
+        (println "Error: --project and --section are mutually exclusive"))
+      (exit! 1))
+    (let [cfg (config/load-config (:profile opts :default))
+          params (cond-> {}
+                   (:project opts) (assoc :project (:project opts))
+                   (:section opts) (assoc :section (:section opts))
+                   (:assignee opts) (assoc :assignee (:assignee opts)))]
+      (output/display (:output opts :table) columns
+                      (api/get! cfg (str "/tasks?" (build-query params)))))))
 
 
 (defn get-cmd
