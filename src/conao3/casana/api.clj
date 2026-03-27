@@ -51,6 +51,6 @@
   [config path params]
   (-> (http/post (str base-url path)
                  (assoc (auth-opts (:access-token config))
-                        :multipart (mapv (fn [[k v]] {:name (name k) :content v}) params)))
+                        :multipart (mapv (fn [[k v]] {:name (name k) :content (str v)}) params)))
       :body
       :data))
