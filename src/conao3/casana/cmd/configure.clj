@@ -2,6 +2,7 @@
   (:require
    [conao3.casana.config :as config]))
 
+(set! *warn-on-reflection* true)
 
 (defn run
   [{:keys [opts]}]
