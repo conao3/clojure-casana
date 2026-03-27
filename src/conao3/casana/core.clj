@@ -129,6 +129,7 @@
           {:assignee {:desc "New assignee GID or 'me'"}
            :dependencies {:desc "Dependency task GIDs (comma-separated; empty string clears all)"}
            :due {:desc "New due date (YYYY-MM-DD)"}
+           :field {:desc "Custom field value as name=value (empty value clears the field)"}
            :gid {:desc "Task GID"}
            :name {:desc "New task name"}
            :notes {:desc "New task notes (body text)"}}

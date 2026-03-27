@@ -121,7 +121,27 @@
                     api/get!  (fn [_ _] (reset! get-called true) [])
                     api/put!  (fn [_ _ _] {:gid "1"})]
         (with-out-str (tasks/update-cmd {:opts {:profile :default :output :text :gid "1"}}))
-        (t/is (false? @get-called))))))
+        (t/is (false? @get-called)))))
+  (t/testing "sets custom field by name"
+    (let [put-captured (atom nil)]
+      (with-redefs [config/load-config (fn [_] test-cfg)
+                    api/get! (fn [_ _] {:custom_fields [{:gid "cf1" :name "GitHub"}]})
+                    api/put! (fn [_ path body]
+                               (reset! put-captured {:path path :body body})
+                               {:gid "1"})]
+        (with-out-str (tasks/update-cmd {:opts {:profile :default :output :text
+                                                :gid "1" :field "GitHub=https://example.com"}}))
+        (t/is (= "https://example.com" (get-in @put-captured [:body :custom_fields :cf1]))))))
+  (t/testing "clears custom field when value is empty"
+    (let [put-captured (atom nil)]
+      (with-redefs [config/load-config (fn [_] test-cfg)
+                    api/get! (fn [_ _] {:custom_fields [{:gid "cf1" :name "GitHub"}]})
+                    api/put! (fn [_ _ body]
+                               (reset! put-captured body)
+                               {:gid "1"})]
+        (with-out-str (tasks/update-cmd {:opts {:profile :default :output :text
+                                                :gid "1" :field "GitHub="}}))
+        (t/is (nil? (get-in @put-captured [:custom_fields :cf1])))))))
 
 
 (t/deftest create-cmd-test

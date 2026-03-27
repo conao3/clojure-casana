@@ -47,7 +47,7 @@ casana sections get --gid <gid>
 casana tasks list [--project <gid>] [--section <gid>] [--assignee <gid|me>]
 casana tasks get --gid <gid>
 casana tasks create --name <name> [--project <gid>] [--section <gid>] [--notes <text>] [--due <date>] [--assignee <gid|me>]
-casana tasks update --gid <gid> [--name <name>] [--notes <text>] [--due <date>] [--assignee <gid|me>] [--dependencies <gid,...>]
+casana tasks update --gid <gid> [--name <name>] [--notes <text>] [--due <date>] [--assignee <gid|me>] [--dependencies <gid,...>] [--field <name=value>]
 casana tasks complete --gid <gid>
 casana tasks move --gid <gid> --section <gid>
 casana tasks delete --gid <gid>
@@ -60,6 +60,8 @@ casana comments create --task <gid> --text <text>
 `--assignee` accepts a user GID or `me` (the authenticated user). Use `casana users list` to find user GIDs.
 
 `--dependencies` accepts comma-separated task GIDs (e.g. `--dependencies gid1,gid2`). Pass an empty string to clear all dependencies.
+
+`--field` accepts `name=value` to set a custom field by name (e.g. `--field "GitHub=https://..."`). Pass an empty value to clear the field (e.g. `--field "GitHub="`).
 
 ### Global options
 
