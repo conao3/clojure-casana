@@ -3,11 +3,11 @@
    [cheshire.core :as json]
    [clojure.string :as str])
   (:import
-   (com.fasterxml.jackson.core
-    JsonGenerator)
    (com.fasterxml.jackson.core.util
     DefaultIndenter
-    DefaultPrettyPrinter)))
+    DefaultPrettyPrinter
+    Separators
+    Separators$Spacing)))
 
 (set! *warn-on-reflection* true)
 
@@ -58,13 +58,13 @@
 
 (defn- make-pretty-printer []
   (let [nl DefaultIndenter/SYSTEM_LINEFEED_INSTANCE
-        pp (proxy [DefaultPrettyPrinter] []
-             (createInstance [] (make-pretty-printer))
-             (writeObjectFieldValueSeparator [^JsonGenerator g]
-               (.writeRaw g ": ")))]
-    (doto pp
-      (.indentArraysWith nl)
-      (.indentObjectsWith nl))))
+        sep (-> (Separators/createDefaultInstance)
+                (.withObjectFieldValueSpacing Separators$Spacing/AFTER))
+        pp (-> (DefaultPrettyPrinter.)
+               (.withSeparators sep)
+               (.withArrayIndenter nl)
+               (.withObjectIndenter nl))]
+    pp))
 
 
 (def ^:private pretty-printer (make-pretty-printer))
