@@ -107,7 +107,7 @@
           sections/get-cmd)}
    {:cmds ["tasks" "list"]
     :fn (with-help "tasks list [--project <gid>] [--section <gid>] [--assignee <gid>]"
-          {:assignee {:desc "Assignee GID"}
+          {:assignee {:desc "Assignee GID or 'me'"}
            :project {:desc "Project GID (mutually exclusive with --section)"}
            :section {:desc "Section GID (mutually exclusive with --project)"}}
           tasks/list-cmd)}
@@ -117,7 +117,7 @@
           tasks/get-cmd)}
    {:cmds ["tasks" "create"]
     :fn (with-help "tasks create --name <name> [options]"
-          {:assignee {:desc "Assignee GID"}
+          {:assignee {:desc "Assignee GID or 'me'"}
            :due {:desc "Due date (YYYY-MM-DD)"}
            :name {:desc "Task name"}
            :notes {:desc "Task notes (body text)"}
@@ -126,7 +126,7 @@
           tasks/create-cmd)}
    {:cmds ["tasks" "update"]
     :fn (with-help "tasks update --gid <gid> [options]"
-          {:assignee {:desc "New assignee GID"}
+          {:assignee {:desc "New assignee GID or 'me'"}
            :dependencies {:desc "Dependency task GIDs (comma-separated; empty string clears all)"}
            :due {:desc "New due date (YYYY-MM-DD)"}
            :gid {:desc "Task GID"}

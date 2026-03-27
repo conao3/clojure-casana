@@ -32,6 +32,9 @@ Or run `casana workspaces list` after setting your access token.
 # Workspaces
 casana workspaces list
 
+# Users
+casana users list [--workspace <gid>]
+
 # Projects
 casana projects list [--workspace <gid>]
 casana projects get --gid <gid>
@@ -41,10 +44,10 @@ casana sections list --project <gid>
 casana sections get --gid <gid>
 
 # Tasks
-casana tasks list [--project <gid>] [--section <gid>] [--assignee <gid>]
+casana tasks list [--project <gid>] [--section <gid>] [--assignee <gid|me>]
 casana tasks get --gid <gid>
-casana tasks create --name <name> [--project <gid>] [--section <gid>] [--due <date>]
-casana tasks update --gid <gid> [--name <name>] [--due <date>]
+casana tasks create --name <name> [--project <gid>] [--section <gid>] [--notes <text>] [--due <date>] [--assignee <gid|me>]
+casana tasks update --gid <gid> [--name <name>] [--notes <text>] [--due <date>] [--assignee <gid|me>] [--dependencies <gid,...>]
 casana tasks complete --gid <gid>
 casana tasks move --gid <gid> --section <gid>
 casana tasks delete --gid <gid>
@@ -53,6 +56,10 @@ casana tasks delete --gid <gid>
 casana comments list --task <gid>
 casana comments create --task <gid> --text <text>
 ```
+
+`--assignee` accepts a user GID or `me` (the authenticated user). Use `casana users list` to find user GIDs.
+
+`--dependencies` accepts comma-separated task GIDs (e.g. `--dependencies gid1,gid2`). Pass an empty string to clear all dependencies.
 
 ### Global options
 
