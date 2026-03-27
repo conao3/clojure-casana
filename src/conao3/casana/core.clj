@@ -76,7 +76,7 @@
   (println "  sections list|get")
   (println "  tasks list|get|create|update|complete|move|delete")
   (println "  comments list|create")
-  (println "  attachments list|create|delete")
+  (println "  attachments list|create|delete|link-github-pr")
   (println)
   (println "Global options:")
   (println (format-spec global-spec)))
@@ -172,6 +172,11 @@
     :fn (with-help "attachments delete --gid <gid>"
           {:gid {:desc "Attachment GID"}}
           attachments/delete-cmd)}
+   {:cmds ["attachments" "link-github-pr"]
+    :fn (with-help "attachments link-github-pr --task <gid> --url <url>"
+          {:task {:desc "Task GID"}
+           :url {:desc "GitHub pull request URL"}}
+          attachments/link-github-pr-cmd)}
    {:cmds []
     :fn print-global-help}])
 
