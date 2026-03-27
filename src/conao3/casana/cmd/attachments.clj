@@ -24,8 +24,8 @@
                         :resource_subtype "external"
                         :url (:url opts)}
                  (:name opts) (assoc :name (:name opts)))]
-    (output/display (:output opts :table) columns
-                    [(api/post-form! cfg "/attachments" params)])))
+    (output/display-one (:output opts :table) columns
+                        (api/post-form! cfg "/attachments" params))))
 
 
 (defn delete-cmd

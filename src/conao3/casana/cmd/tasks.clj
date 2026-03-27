@@ -51,9 +51,9 @@
                                        "/attachments?opt_fields=gid,name,resource_subtype,view_url"))
         task+att (assoc task :attachments attachments)]
     (if (= :json (:output opts :table))
-      (output/display :json (conj columns :attachments) [task+att])
+      (output/display-one :json (conj columns :attachments) task+att)
       (do
-        (output/display :table columns [task])
+        (output/display-one :table columns task)
         (when (seq (:custom_fields task))
           (println)
           (println "Custom fields:")
@@ -81,7 +81,7 @@
         task (api/post! cfg "/tasks" body)]
     (when (and (:section opts) (not (:project opts)))
       (api/post! cfg (str "/sections/" (:section opts) "/addTask") {:task (:gid task)}))
-    (output/display (:output opts :table) columns [task])))
+    (output/display-one (:output opts :table) columns task)))
 
 
 (defn- parse-field-opt
@@ -130,14 +130,14 @@
       (update-dependencies! cfg (:gid opts)
                             (when (seq (:dependencies opts))
                               (str/split (:dependencies opts) #","))))
-    (output/display (:output opts :table) columns [task])))
+    (output/display-one (:output opts :table) columns task)))
 
 
 (defn complete-cmd
   [{:keys [opts]}]
   (let [cfg (config/load-config (:profile opts :default))]
-    (output/display (:output opts :table) columns
-                    [(api/put! cfg (str "/tasks/" (:gid opts)) {:completed true})])))
+    (output/display-one (:output opts :table) columns
+                        (api/put! cfg (str "/tasks/" (:gid opts)) {:completed true}))))
 
 
 (defn move-cmd

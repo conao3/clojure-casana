@@ -68,3 +68,11 @@
     :json (println (json/generate-string data {:pretty pretty-printer}))
     :text (print-text headers data)
     (print-table headers data)))
+
+
+(defn display-one
+  [fmt headers item]
+  (case fmt
+    :json (println (json/generate-string item {:pretty pretty-printer}))
+    :text (print-text headers [item])
+    (print-table headers [item])))
