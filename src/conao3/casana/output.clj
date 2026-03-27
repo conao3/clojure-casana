@@ -1,7 +1,13 @@
 (ns conao3.casana.output
   (:require
    [cheshire.core :as json]
-   [clojure.string :as str]))
+   [clojure.string :as str])
+  (:import
+   (com.fasterxml.jackson.core.util
+    DefaultIndenter
+    DefaultPrettyPrinter)))
+
+(set! *warn-on-reflection* true)
 
 
 (defn- cell-str
@@ -48,9 +54,15 @@
     (println (str/join "\t" (map #(cell-str (get row %)) headers)))))
 
 
+(def ^:private pretty-printer
+  (doto (DefaultPrettyPrinter.)
+    (.indentArraysWith DefaultIndenter/SYSTEM_LINEFEED_INSTANCE)
+    (.indentObjectsWith DefaultIndenter/SYSTEM_LINEFEED_INSTANCE)))
+
+
 (defn display
   [fmt headers data]
   (case fmt
-    :json (println (json/generate-string data {:pretty true}))
+    :json (println (json/generate-string data {:pretty pretty-printer}))
     :text (print-text headers data)
     (print-table headers data)))
