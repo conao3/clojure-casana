@@ -1,7 +1,7 @@
 (ns conao3.casana.output
   (:require
-    [cheshire.core :as json]
-    [clojure.string :as str]))
+   [cheshire.core :as json]
+   [clojure.string :as str]))
 
 
 (defn- cell-str

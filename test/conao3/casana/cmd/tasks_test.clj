@@ -1,10 +1,10 @@
 (ns conao3.casana.cmd.tasks-test
   (:require
-    [clojure.string :as str]
-    [clojure.test :refer [deftest is testing]]
-    [conao3.casana.api :as api]
-    [conao3.casana.cmd.tasks :as tasks]
-    [conao3.casana.config :as config]))
+   [clojure.string :as str]
+   [clojure.test :refer [deftest is testing]]
+   [conao3.casana.api :as api]
+   [conao3.casana.cmd.tasks :as tasks]
+   [conao3.casana.config :as config]))
 
 
 (def ^:private test-cfg {:access-token "tok"})

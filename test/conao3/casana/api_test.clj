@@ -1,9 +1,9 @@
 (ns conao3.casana.api-test
   (:require
-    [clj-http.client :as http]
-    [clojure.string :as str]
-    [clojure.test :refer [deftest is testing]]
-    [conao3.casana.api :as api]))
+   [clj-http.client :as http]
+   [clojure.string :as str]
+   [clojure.test :refer [deftest is testing]]
+   [conao3.casana.api :as api]))
 
 
 (def ^:private test-config {:access-token "test-token"})

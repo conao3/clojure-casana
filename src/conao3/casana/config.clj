@@ -1,7 +1,7 @@
 (ns conao3.casana.config
   (:require
-    [clojure.edn :as edn]
-    [clojure.java.io :as io]))
+   [clojure.edn :as edn]
+   [clojure.java.io :as io]))
 
 
 (defn- config-path

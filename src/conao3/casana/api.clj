@@ -1,7 +1,7 @@
 (ns conao3.casana.api
   (:require
-    [cheshire.core :as json]
-    [clj-http.client :as http]))
+   [cheshire.core :as json]
+   [clj-http.client :as http]))
 
 
 (def ^:private base-url "https://app.asana.com/api/1.0")

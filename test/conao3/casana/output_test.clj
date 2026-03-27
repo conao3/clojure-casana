@@ -1,8 +1,8 @@
 (ns conao3.casana.output-test
   (:require
-    [clojure.string :as str]
-    [clojure.test :refer [deftest is testing]]
-    [conao3.casana.output :as output]))
+   [clojure.string :as str]
+   [clojure.test :refer [deftest is testing]]
+   [conao3.casana.output :as output]))
 
 
 (def ^:private cell-str #'output/cell-str)

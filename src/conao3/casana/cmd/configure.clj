@@ -1,6 +1,6 @@
 (ns conao3.casana.cmd.configure
   (:require
-    [conao3.casana.config :as config]))
+   [conao3.casana.config :as config]))
 
 
 (defn run
@@ -16,7 +16,7 @@
         _ (flush)
         workspace (read-line)]
     (config/save-config
-      profile
-      (cond-> {:access-token token}
-        (seq workspace) (assoc :workspace workspace)))
+     profile
+     (cond-> {:access-token token}
+       (seq workspace) (assoc :workspace workspace)))
     (println "Configuration saved.")))

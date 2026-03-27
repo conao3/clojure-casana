@@ -1,12 +1,12 @@
 (ns conao3.casana.config-test
   (:require
-    [clojure.test :refer [deftest is testing]]
-    [conao3.casana.config :as config])
+   [clojure.test :refer [deftest is testing]]
+   [conao3.casana.config :as config])
   (:import
-    (java.nio.file
-      Files)
-    (java.nio.file.attribute
-      FileAttribute)))
+   (java.nio.file
+    Files)
+   (java.nio.file.attribute
+    FileAttribute)))
 
 
 (defn- create-tmp-dir

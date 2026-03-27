@@ -1,9 +1,9 @@
 (ns conao3.casana.cmd.tasks
   (:require
-    [clojure.string :as str]
-    [conao3.casana.api :as api]
-    [conao3.casana.config :as config]
-    [conao3.casana.output :as output]))
+   [clojure.string :as str]
+   [conao3.casana.api :as api]
+   [conao3.casana.config :as config]
+   [conao3.casana.output :as output]))
 
 
 (def ^:private columns [:gid :name :due_on :assignee :completed])

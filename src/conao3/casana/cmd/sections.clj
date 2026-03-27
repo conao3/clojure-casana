@@ -1,8 +1,8 @@
 (ns conao3.casana.cmd.sections
   (:require
-    [conao3.casana.api :as api]
-    [conao3.casana.config :as config]
-    [conao3.casana.output :as output]))
+   [conao3.casana.api :as api]
+   [conao3.casana.config :as config]
+   [conao3.casana.output :as output]))
 
 
 (def ^:private columns [:gid :name])

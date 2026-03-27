@@ -1,0 +1,14 @@
+{:files
+ {:ignore #{"target"}}
+
+ :rules
+ {:indentation {:list-indent 1
+                :indents {defrecord [[:inner 0] [:inner 1]]}}
+  :blank-lines {:insert-padding? false
+                :trim-consecutive? true
+                :max-consecutive 2}
+  :eof-newline {:enabled? true
+                :trailing-blanks? false}
+  :functions {:enabled? false}
+  :types {:enabled? false}
+  :namespaces {:indent-size 1}}}

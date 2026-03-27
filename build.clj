@@ -1,6 +1,6 @@
 (ns build
   (:require
-    [clojure.tools.build.api :as b]))
+   [clojure.tools.build.api :as b]))
 
 
 (def ^:private class-dir "target/classes")

@@ -1,13 +1,13 @@
 (ns conao3.casana.core
   (:gen-class)
   (:require
-    [babashka.cli :as cli]
-    [conao3.casana.cmd.comments :as comments]
-    [conao3.casana.cmd.configure :as configure]
-    [conao3.casana.cmd.projects :as projects]
-    [conao3.casana.cmd.sections :as sections]
-    [conao3.casana.cmd.tasks :as tasks]
-    [conao3.casana.cmd.workspaces :as workspaces]))
+   [babashka.cli :as cli]
+   [conao3.casana.cmd.comments :as comments]
+   [conao3.casana.cmd.configure :as configure]
+   [conao3.casana.cmd.projects :as projects]
+   [conao3.casana.cmd.sections :as sections]
+   [conao3.casana.cmd.tasks :as tasks]
+   [conao3.casana.cmd.workspaces :as workspaces]))
 
 
 (def ^:private global-spec
