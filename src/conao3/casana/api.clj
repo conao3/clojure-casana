@@ -45,3 +45,12 @@
   (-> (http/delete (str base-url path) (auth-opts (:access-token config)))
       :body
       :data))
+
+
+(defn post-form!
+  [config path params]
+  (-> (http/post (str base-url path)
+                 (assoc (auth-opts (:access-token config))
+                        :multipart (mapv (fn [[k v]] {:name (name k) :content v}) params)))
+      :body
+      :data))

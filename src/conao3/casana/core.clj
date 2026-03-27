@@ -4,6 +4,7 @@
    [babashka.cli :as cli]
    [cheshire.core :as json]
    [clojure.string :as str]
+   [conao3.casana.cmd.attachments :as attachments]
    [conao3.casana.cmd.comments :as comments]
    [conao3.casana.cmd.configure :as configure]
    [conao3.casana.cmd.projects :as projects]
@@ -75,6 +76,7 @@
   (println "  sections list|get")
   (println "  tasks list|get|create|update|complete|move|delete")
   (println "  comments list|create")
+  (println "  attachments list|create|delete")
   (println)
   (println "Global options:")
   (println (format-spec global-spec)))
@@ -156,6 +158,20 @@
           {:task {:desc "Task GID"}
            :text {:desc "Comment text"}}
           comments/create-cmd)}
+   {:cmds ["attachments" "list"]
+    :fn (with-help "attachments list --task <gid>"
+          {:task {:desc "Task GID"}}
+          attachments/list-cmd)}
+   {:cmds ["attachments" "create"]
+    :fn (with-help "attachments create --task <gid> --url <url> [--name <name>]"
+          {:name {:desc "Display name"}
+           :task {:desc "Task GID"}
+           :url {:desc "URL to link"}}
+          attachments/create-cmd)}
+   {:cmds ["attachments" "delete"]
+    :fn (with-help "attachments delete --gid <gid>"
+          {:gid {:desc "Attachment GID"}}
+          attachments/delete-cmd)}
    {:cmds []
     :fn print-global-help}])
 

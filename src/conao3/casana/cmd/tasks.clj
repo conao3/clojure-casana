@@ -46,13 +46,22 @@
 (defn get-cmd
   [{:keys [opts]}]
   (let [cfg (config/load-config (:profile opts :default))
-        task (api/get! cfg (str "/tasks/" (:gid opts) "?opt_fields=" get-opt-fields))]
+        task (api/get! cfg (str "/tasks/" (:gid opts) "?opt_fields=" get-opt-fields))
+        table-output? (not= :json (:output opts :table))]
     (output/display (:output opts :table) columns [task])
-    (when (and (not= :json (:output opts :table)) (seq (:custom_fields task)))
+    (when (and table-output? (seq (:custom_fields task)))
       (println)
       (println "Custom fields:")
       (doseq [{field-name :name field-value :display_value} (:custom_fields task)]
-        (println (str "  " field-name ": " (or field-value "-")))))))
+        (println (str "  " field-name ": " (or field-value "-")))))
+    (when table-output?
+      (let [attachments (api/get! cfg (str "/tasks/" (:gid opts)
+                                           "/attachments?opt_fields=gid,name,resource_subtype,view_url"))]
+        (when (seq attachments)
+          (println)
+          (println "Attachments:")
+          (doseq [{att-name :name att-url :view_url} attachments]
+            (println (str "  " att-name ": " (or att-url "-")))))))))
 
 
 (defn create-cmd

@@ -55,6 +55,11 @@ casana tasks delete --gid <gid>
 # Comments
 casana comments list --task <gid>
 casana comments create --task <gid> --text <text>
+
+# Attachments (external links, e.g. GitHub PRs)
+casana attachments list --task <gid>
+casana attachments create --task <gid> --url <url> [--name <name>]
+casana attachments delete --gid <gid>
 ```
 
 `--assignee` accepts a user GID or `me` (the authenticated user). Use `casana users list` to find user GIDs.
