@@ -1,12 +1,12 @@
 {:paths ["src"]
- :deps {org.clojure/clojure {:mvn/version "1.12.0"}
-        clj-http/clj-http {:mvn/version "3.13.0"}
-        cheshire/cheshire {:mvn/version "5.13.0"}
-        org.babashka/cli {:mvn/version "0.8.61"}}
+ :deps {org.clojure/clojure {:mvn/version "1.12.6"}
+        clj-http/clj-http {:mvn/version "3.13.1"}
+        cheshire/cheshire {:mvn/version "6.2.0"}
+        org.babashka/cli {:mvn/version "0.12.92"}}
  :aliases
  {:run   {:main-opts ["-m" "conao3.casana.core"]}
   :test  {:extra-paths ["test"]
           :extra-deps {lambdaisland/kaocha {:mvn/version "1.91.1392"}}
           :main-opts ["-m" "kaocha.runner"]}
-  :build {:deps {io.github.clojure/tools.build {:mvn/version "0.10.6"}}
+  :build {:deps {io.github.clojure/tools.build {:mvn/version "0.10.14"}}
           :ns-default build}}}
