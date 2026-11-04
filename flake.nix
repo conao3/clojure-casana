@@ -22,7 +22,6 @@
         treefmt = {
           projectRootFile = "flake.nix";
           programs.alejandra.enable = true;
-          programs.cljstyle.enable = true;
         };
 
         devShells.default = pkgs.mkShell {
