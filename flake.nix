@@ -15,20 +15,9 @@
 
       systems = ["x86_64-linux" "aarch64-darwin"];
 
-      perSystem = {
-        system,
-        ...
-      }: let
-        overlay = final: prev: let
-          jdk = prev.graalvmPackages.graalvm-ce;
-          clojure = prev.clojure.override {inherit jdk;};
-        in {
-          inherit jdk clojure;
-        };
-        pkgs = import inputs.nixpkgs {
-          inherit system;
-          overlays = [overlay];
-        };
+      perSystem = {pkgs, ...}: let
+        jdk = pkgs.graalvmPackages.graalvm-ce;
+        clojure = pkgs.clojure.override {inherit jdk;};
       in {
         treefmt = {
           projectRootFile = "flake.nix";
